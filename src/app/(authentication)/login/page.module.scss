@@ -1,0 +1,47 @@
+.imageContainer {
+    width: 100%;
+    height: auto;
+    background: no-repeat scroll top;
+    background-size: cover;
+}
+
+.container {
+    margin: 50px auto 0 auto;
+    max-width: 400px;
+    background: var(--ant-color-bg-container);
+    min-height: 300px;
+    padding: 24;
+    border-radius: var(--ant-border-radius-lg);
+    box-shadow: var(--ant-box-shadow-tertiary);
+}
+
+@media only screen and (width >= 992px) {
+    .container {
+        max-width: 500px;
+    }
+}
+
+@media only screen and (width >= 1200px) {
+    .container {
+        max-width: 600px;
+    }
+}
+
+.formTitle {
+    text-align: center;
+}
+
+form.loginForm {
+    padding: 5px 20px;
+    margin: 10px auto 0 auto;
+}
+
+@media only screen and (width >= 1200px) {
+    form.loginForm {
+        padding: 10px 50px;
+    }
+}
+
+form.loginForm button {
+    margin-bottom: 7px;
+}
