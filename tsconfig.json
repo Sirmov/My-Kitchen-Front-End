@@ -5,6 +5,8 @@
         "allowJs": false,
         "skipLibCheck": true,
         "strict": true,
+        "alwaysStrict": true,
+        "noImplicitAny": true,
         "forceConsistentCasingInFileNames": true,
         "noEmit": true,
         "esModuleInterop": true,
@@ -14,14 +16,19 @@
         "isolatedModules": true,
         "jsx": "preserve",
         "incremental": true,
+        "baseUrl": "./",
         "plugins": [
             {
                 "name": "next"
             }
         ],
         "paths": {
-            "@/*": ["./src/*"],
-            "@public/*": ["./public/*"]
+            "@": ["src/"],
+            "@/*": ["src/*"],
+            "@public": ["public"],
+            "@public/*": ["public/*"],
+            "@hooks": ["src/hooks"],
+            "@hooks/*": ["src/hooks/*"]
         }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
