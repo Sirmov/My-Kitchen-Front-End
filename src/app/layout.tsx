@@ -10,6 +10,7 @@ import { Content } from 'antd/es/layout/layout';
 
 import Footer from '@/components/layout/footer/footer';
 import NavigationHeader from '@/components/layout/navigationHeader/navigationHeader';
+import { AuthProvider } from '@/contexts/authContext';
 
 export const metadata: Metadata = {
     title: {
@@ -24,15 +25,17 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
         <html lang="en">
             <body>
                 <ConfigProvider theme={{ cssVar: true }}>
-                    <App>
-                        <Layout>
-                            <NavigationHeader />
-                            <Content>
-                                <AntdRegistry>{children}</AntdRegistry>
-                            </Content>
-                            <Footer />
-                        </Layout>
-                    </App>
+                    <AuthProvider>
+                        <App>
+                            <Layout>
+                                <NavigationHeader />
+                                <Content>
+                                    <AntdRegistry>{children}</AntdRegistry>
+                                </Content>
+                                <Footer />
+                            </Layout>
+                        </App>
+                    </AuthProvider>
                 </ConfigProvider>
             </body>
         </html>
