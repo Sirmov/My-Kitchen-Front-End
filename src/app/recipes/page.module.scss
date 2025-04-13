@@ -1,0 +1,28 @@
+.container {
+    flex-grow: 1;
+    background: var(--ant-color-bg-container);
+    padding: 24;
+    border-radius: var(--ant-border-radius-lg);
+    margin: 20px 48px;
+}
+
+.containerTitle {
+    text-align: center;
+    padding-bottom: 40px;
+}
+
+.emptyRecipes {
+    margin-top: 40px;
+}
+
+.emptyImage {
+    width: 100%;
+}
+
+.emptyRecipes :global(.ant-empty-image) {
+    height: 200px;
+}
+
+.emptyRecipes :global(.ant-empty-description) {
+    font-size: large;
+}
