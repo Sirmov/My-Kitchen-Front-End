@@ -1,0 +1,29 @@
+'use client';
+
+import React, { useState } from 'react';
+import Image, { ImageProps } from 'next/image';
+
+type ImageWithFallbackProps = ImageProps & {
+    fallbackSrc?: string;
+};
+
+const placeholderSrc =
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAADHCAQAAABc4UVVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfoCBAHHRZYXeDZAAAEyElEQVR42u3d21YTWRSF4VnLBAiJ4An1/d/AN/EpbFuHB4RARGK8QIfY2linZK+11z+vCYf8X6oqIQOalxuxxDPuAgAwADAAMAAwADAAMAAwADAAMAAwADAAMAAwADAAMAAwADAAMAAwADAAMAAwADAAMAAwADAAMAAwADAAMAAwADAAMAAwADAAMAAwADAAMAAwH5uU+9KN7kmS1uKPlaYCcE+Hmmnv1pe+1korXegrPWoHsKdjHar57ZtYaKGvOtcnXdOkVgCNHur+b/FvX44caaFTfeKUUCOAqZ5q2uKa9KFmeqs1Zep6FrCv5y3y3+xAz0temwJgG2f+Z9+v+NseLbp9PHMNwHTS+ctMdUKbWgA8an3w//VEcEydGgDsa9HzlsdcCdQA4MGAb+2IPtEBTDUbcOvFHa8asBAA5gO/uUMKxQYwK3x7VhRAo73Bl5AsMIDJ4HP4hKuAyACGv5rX8I6V2KeAAM9TAbC9bZx8DlYIwBjv8OEXw4EBfBn8Ga45AsQ+BVwN/AyfKRQZgLQqfHtWGMBy4BFkSaHYAD4POogveaN4dADS6YDH/yl94gO40EXPW56N8CyCFQcgvev1XP5KH6hTB4C13nZ+Nt/nNswpAGnVMedabzj81wRAutC/rU8EX/SaF4BqAyCt9KrV5eCZ/uHRv8Pt8J3Xa73RTA/ueJfPpT7y2K8XwE3iS+1rroNf3iy20ZUuteSRXz8A6cerg42mMjXaaM3v/HIB+PmoZ4kuAhkAGAAYABgAGAAYABgAGAAYABgAGAAYABgAGAAYABgAGABcba5HVf5c/D3mlvmfqFGjdxwB8uaX7usxAPLmV5UEANAhf40EANApf30EANAxf20EANA5f10EANAjf00EANArfz0EANAzfy0EANA7fx0EADAgfw0EADAof3wCABiYPzoBAAzOH5sAAEbIH5kAAEbJH5cAAEbKH5UAAEbLH5OAkf/JqP+dNBoBI//Y/5w2FgEj//iLRMDIr9QEjPy5CRj5cxNwC6DRiQ4C549CwPzmn+vpVgjsKn8MAuY1/6Ek2wKBXeaPQMD85tcWCOw6v38C5jn/2ARK5PdOwHznH5NAqfy+CZj3/GMRKJnfMwHzn38MAqXz+yVgEfIPJeAhv1cCFiP/EAJe8vskYFHy9yXgKb9HAhYnfx8C3vL7I2CR8ncl4DG/NwIWK38XAl7z+yJg0fK3JeA5vycCFi9/GwLe8/shYBHz/41AhPxeCFjM/HcRiJLfBwGLmv//CETK74GAxc3/JwLR8pcnYJHz/5dAxPylCVjs/LcJRM1flsAkev4fBM50FDb/DYGN3td9BNhW/psf4zh0fkk6KnIUsBry17ISJwIjf24CRv7cBIz8uQkY+XMTMPLnJmDkz03AyJ+bgJE/NwEjf24CRv7cBIz8uQkY+XMTMPLnJmDkz03AyJ+bgJE/NwEjf24CRv7cBIz8uQkY+XMTMPLnJmDkz03AyJ+bgJE/NwEjf24CRv7cBIz8uQkY+XMTMPLnJmDkz03AyJ+bgJE/NwEjf24CRv7cBFr9kai5Nlpy3waZ6UCrcQGc65z7tVouDAAMAAwADAAMAAwADAAMAAwADAAMAAwADAAMAAwArLZNmhfcCZn3DTdlgTToAjxsAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDI0LTA4LTE2VDA3OjI5OjIyKzAwOjAwgRvI1wAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyNC0wOC0xNlQwNzoyOToyMiswMDowMPBGcGsAAAAASUVORK5CYII=';
+
+const ImageWithFallback = ({ src, fallbackSrc = placeholderSrc, alt, ...rest }: ImageWithFallbackProps) => {
+    const [imgSrc, setImgSrc] = useState(src);
+
+    return (
+        <Image
+            {...rest}
+            src={imgSrc}
+            alt={alt}
+            placeholder={rest.placeholder === undefined ? placeholderSrc : rest.placeholder}
+            onError={() => {
+                setImgSrc(fallbackSrc);
+            }}
+        />
+    );
+};
+
+export default ImageWithFallback;
