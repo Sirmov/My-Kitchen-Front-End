@@ -1,0 +1,31 @@
+.recipeCard {
+    height: 100%;
+    width: 90%;
+    margin: 0 auto 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.recipeCard :global(.ant-card-body) {
+    flex-grow: 1;
+}
+
+.recipeCard:global(.ant-card) ul:global(.ant-card-actions) .deleteIcon:hover {
+    color: #eb3d34;
+}
+
+.recipeCard:global(.ant-card) ul:global(.ant-card-actions) .editIcon:hover {
+    color: #fad841;
+}
+
+.recipeImageContainer {
+    position: relative;
+    width: 100%;
+    height: 250px;
+}
+
+.recipeImage {
+    border-radius: var(--ant-border-radius-lg) var(--ant-border-radius-lg) 0 0;
+    object-fit: fill;
+    object-position: center;
+}
