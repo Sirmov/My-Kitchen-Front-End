@@ -4,8 +4,8 @@ import notebook from '@public/notebook.svg';
 
 import { Col, Empty, Row } from 'antd';
 
-import RecipeCard, { Recipe } from '@/components/layout/recipeCard/recipeCard';
-import RecipeCardSkeleton from '@/components/layout/recipeCard/skeleton/recipeCardSkeleton';
+import RecipeCard, { Recipe } from '@/components/recipeCard/recipeCard';
+import RecipeCardSkeleton from '@/components/recipeCard/skeleton/recipeCardSkeleton';
 import Image from 'next/image';
 
 const recipes: Recipe[] = [
