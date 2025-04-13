@@ -26,6 +26,15 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+div.ant-layout {
+    min-height: 100vh;
+}
+
+main.ant-layout-content {
+    display: flex;
+    flex-direction: column;
+}
+
 * {
     box-sizing: border-box;
     padding: 0;
