@@ -45,7 +45,9 @@ export default function NavigationHeader() {
 
     return (
         <Header className={styles.header}>
-            <Image className={styles.logo} src={logoHorizontal} alt="logo" />
+            <Link className={styles.logo} href="/">
+                <Image className={styles.logo} src={logoHorizontal} alt="logo" />
+            </Link>
 
             <Menu className={styles.navigationMenu} theme="dark" mode="horizontal" items={navigationItems} />
 
