@@ -5,16 +5,9 @@ import Meta from 'antd/es/card/Meta';
 import { ReactNode } from 'react';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
-import ImageWithFallback from '@/utils/imageWithFallback/imageWithFallback';
+import { Recipe } from '@/services/recipesService';
 
-export type Recipe = {
-    id: string;
-    imageUrl: string;
-    title: string;
-    description: string;
-    // ingredients: string;
-    // directions: string;
-};
+import ImageWithFallback from '@/utils/imageWithFallback/imageWithFallback';
 
 export type RecipeCardProps = {
     recipe: Recipe;
