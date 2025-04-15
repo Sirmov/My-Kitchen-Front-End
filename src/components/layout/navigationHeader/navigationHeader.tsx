@@ -27,14 +27,14 @@ export default function NavigationHeader() {
             key: 'home',
         },
         {
-            label: <Link href="/author">Author</Link>,
-            key: 'author',
+            label: <Link href="/about">About</Link>,
+            key: 'about',
         },
     ];
 
     if (auth) {
         if (!navigationItems.find((ni) => ni?.key === 'recipes')) {
-            navigationItems.push({
+            navigationItems.splice(1, 0, {
                 label: <Link href="/recipes">Recipes</Link>,
                 key: 'recipes',
             });
