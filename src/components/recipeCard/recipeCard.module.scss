@@ -29,3 +29,7 @@
     object-fit: fill;
     object-position: center;
 }
+
+div:global(.ant-popover) span:global(.ant-popconfirm-message-icon) .confirmDeleteIcon:global(.anticon) {
+    color: red;
+}
