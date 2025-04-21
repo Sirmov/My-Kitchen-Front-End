@@ -1,28 +1,231 @@
-.titleSection {
-    margin-top: 50px;
-    padding: 15px 5px;
+.heroSection {
+    padding: 4rem 2rem;
+    background: #eb9a38;
 }
 
-.titleText {
-    margin-top: 100px;
+.heroText {
     text-align: center;
+    h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+    p {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
-.titleText h1 {
-    font-size: 48px;
+.heroImageWrapper {
+    position: relative;
+    height: 400px;
 }
 
-.titleText p {
-    margin: auto;
-    width: 70%;
-    font-size: 24px;
-}
-
-.titleImage {
-    display: block;
-    margin: auto;
-    border-radius: 6%;
-    max-width: 100%;
-    height: auto;
+.heroImage {
+    border-radius: 8px;
+    object-fit: cover;
     box-shadow: var(--ant-box-shadow-secondary);
+}
+
+@media only screen and (max-width: 992) {
+    .heroImageWrapper .heroImage {
+        object-position: 80%;
+    }
+}
+
+@media only screen and (max-width: 768) {
+    .heroImageWrapper {
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .heroText {
+        h1 {
+            font-size: 2.5rem;
+        }
+        p {
+            font-size: 1rem;
+        }
+    }
+}
+
+.howItWorksSection {
+    padding: 4rem 2rem;
+    background: #ffffff;
+    text-align: center;
+
+    h2 {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .stepCard {
+        height: 100%;
+        background: #f7f7f7;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: var(--ant-box-shadow-secondary);
+        transition: transform 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+
+        &:hover {
+            transform: scale(1.05);
+        }
+
+        .stepIcon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #a55f09;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #555;
+        }
+    }
+}
+
+.communitySection {
+    padding: 4rem 2rem;
+    background: #0d2a64;
+    background: linear-gradient(175deg, rgba(13, 42, 100, 1) 10%, rgba(6, 13, 32, 1) 68%, rgba(56, 8, 84, 1) 100%);
+    text-align: center;
+
+    h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: white;
+    }
+
+    p {
+        font-size: 1.125rem;
+        margin-bottom: 2rem;
+        color: #ececec;
+    }
+
+    .communityLinks .communityButton {
+        font-size: 1rem;
+        &:hover {
+            color: #1890ff;
+        }
+    }
+}
+
+.sectionLink {
+    font-size: 1rem;
+    margin-top: 1rem;
+}
+
+.getStarted {
+    position: relative;
+    padding: 12px 24px;
+    font-size: 18px;
+    background-color: #a55f09;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: padding-left 0.4s ease, background-color 0.3s ease;
+
+    .panGroup {
+        position: absolute;
+        top: -22px;
+        left: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+
+    .fire {
+        font-size: 1.2rem;
+        opacity: 0;
+    }
+
+    .pan {
+        font-size: 1.5rem;
+        display: inline-block;
+        transform-origin: center;
+        opacity: 0;
+    }
+
+    &:hover {
+        background-color: #ff6f1f;
+        padding-left: 36px;
+
+        .panGroup {
+            opacity: 1;
+        }
+
+        .fire {
+            animation: fireUp 1s ease-in-out forwards;
+        }
+
+        .pan {
+            animation: jiggle 1s ease-in-out, flip 0.8s 1s ease-in-out forwards;
+            opacity: 1;
+        }
+    }
+}
+
+@keyframes fireUp {
+    0% {
+        opacity: 0;
+        transform: translate(-3px, 20px);
+    }
+    30% {
+        opacity: 1;
+        transform: translate(-3px, 5px);
+    }
+    70% {
+        transform: translate(-3px, 0px);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-3px, -5px);
+    }
+}
+
+@keyframes jiggle {
+    0%,
+    100% {
+        transform: rotate(0);
+    }
+    25% {
+        transform: rotate(-10deg);
+    }
+    50% {
+        transform: rotate(5deg);
+    }
+    75% {
+        transform: rotate(-5deg);
+    }
+}
+
+@keyframes flip {
+    0% {
+        transform: rotate(0) translate(0px, 0px);
+    }
+    50% {
+        transform: rotate(20deg) translate(-4px, -4px);
+    }
+    100% {
+        transform: rotate(0) translate(0px, 0px);
+    }
 }
