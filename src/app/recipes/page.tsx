@@ -15,7 +15,7 @@ import RecipeCard from '@/components/recipeCard/recipeCard';
 
 import { getAllRecipes, Recipe } from '@/services/recipesService';
 
-export default function Recipes() {
+export default function RecipesPage() {
     const [recipes, setRecipes] = useState<Recipe[]>();
 
     useEffect(() => {
