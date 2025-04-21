@@ -1,0 +1,115 @@
+.recipeImageContainer {
+    width: 50%;
+}
+
+.recipeIngredientsContainer {
+    border-left: var(--ant-line-width) solid var(--ant-color-split);
+}
+
+@media only screen and (max-width: 992px) {
+    .recipeIngredientsContainer {
+        border-left: none;
+        border-top: var(--ant-line-width) solid var(--ant-color-split);
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .recipeHeading {
+        flex-wrap: wrap;
+        border-bottom: var(--ant-line-width) solid var(--ant-color-split);
+    }
+
+    .recipeIngredientsContainer {
+        border-top: none;
+    }
+
+    .recipeImageContainer {
+        padding: 20px;
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .recipeImageContainer {
+        padding: 0px;
+    }
+}
+
+.recipeImage {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--ant-border-radius);
+    box-shadow: var(--ant-box-shadow);
+}
+
+.recipeDetails {
+    padding: 30px 15px;
+}
+
+.recipeTitle {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--ant-color-text-heading);
+}
+
+.recipeDescription {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+.recipeIngredientsContainer {
+    text-align: center;
+    margin: auto;
+}
+
+.recipeIngredientsContainer h2 {
+    font-size: 1.8rem;
+}
+
+#ingredientsIcon {
+    margin-left: 3px;
+}
+
+.recipeIngredients {
+    display: inline-block;
+    margin-top: 10px;
+    text-align: left;
+    padding-left: 20px;
+    font-size: 1rem;
+}
+
+#directionsIcon {
+    margin-right: 5px;
+}
+
+.recipeDirectionsHeading {
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+.recipeDirections {
+    width: 90%;
+    margin: 10px auto;
+    font-size: 1rem;
+}
+
+@media only screen and (min-width: 576) {
+    .actions {
+        justify-content: space-evenly;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .actions button {
+        font-size: var(--ant-button-content-font-size-sm);
+        line-height: var(--ant-button-content-line-height-sm);
+        padding-block: var(--ant-button-padding-block-sm);
+        padding-inline: var(--ant-button-padding-inline-sm);
+    }
+
+    .actions button :global(.ant-btn-icon) {
+        font-size: inherit;
+    }
+}
