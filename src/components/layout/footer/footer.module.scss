@@ -1,3 +1,12 @@
 .footer {
     text-align: center;
 }
+
+.footer ul li {
+    list-style: none;
+
+    &:hover a {
+        color: inherit;
+        text-decoration: underline;
+    }
+}
