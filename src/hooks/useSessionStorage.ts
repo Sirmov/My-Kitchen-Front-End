@@ -1,3 +1,5 @@
+'use client';
+
 import useStorage, { StorageType } from '@hooks/useStorage';
 
 function useSessionStorage<T>(key: string, defaultValue: T) {
