@@ -4,12 +4,14 @@ import styles from './navigationHeader.module.scss';
 
 import logoHorizontal from '@public/logo-horizontal.png';
 
-import { useRouter } from 'next/navigation';
+import { ReactNode } from 'react';
+
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
-import { Button, Menu, MenuProps, Space } from 'antd';
-import { EditFilled, LoginOutlined } from '@ant-design/icons';
+import { Button, ConfigProvider, Menu, MenuProps, Space } from 'antd';
+import { EditFilled, LoginOutlined, LogoutOutlined } from '@ant-design/icons';
 import { Header } from 'antd/es/layout/layout';
 import MenuItem from 'antd/es/menu/MenuItem';
 
@@ -18,29 +20,50 @@ import { useAuthContext } from '@/contexts/authContext';
 type MenuItem = Required<MenuProps>['items'][number];
 
 export default function NavigationHeader() {
-    const router = useRouter();
-    const { auth } = useAuthContext();
+    const pathname = usePathname();
+    const { auth, setAuth } = useAuthContext();
 
-    let navigationItems: MenuItem[] = [
+    let navigationLinks: MenuItem[] = [
         {
             label: <Link href="/">Home</Link>,
-            key: 'home',
+            key: '/',
         },
         {
             label: <Link href="/about">About</Link>,
-            key: 'about',
+            key: '/about',
         },
     ];
 
+    let navigationButtons: ReactNode[];
+
     if (auth) {
-        if (!navigationItems.find((ni) => ni?.key === 'recipes')) {
-            navigationItems.splice(1, 0, {
+        if (!navigationLinks.find((ni) => ni?.key === 'recipes')) {
+            navigationLinks.splice(1, 0, {
                 label: <Link href="/recipes">Recipes</Link>,
-                key: 'recipes',
+                key: '/recipes',
             });
         }
+
+        navigationButtons = [
+            <Button key={1} variant="solid" color="orange" icon={<LogoutOutlined />} onClick={() => setAuth(null)}>
+                Logout
+            </Button>,
+        ];
     } else {
-        navigationItems = navigationItems.filter((ni) => ni?.key !== 'recipes');
+        navigationLinks = navigationLinks.filter((ni) => ni?.key !== 'recipes');
+
+        navigationButtons = [
+            <Link key={1} href="/login">
+                <Button key={1} variant="solid" color="orange" icon={<LoginOutlined />}>
+                    Login
+                </Button>
+            </Link>,
+            <Link key={2} href="/register">
+                <Button variant="solid" color="orange" icon={<EditFilled />} iconPosition="end">
+                    Register
+                </Button>
+            </Link>,
+        ];
     }
 
     return (
@@ -51,25 +74,14 @@ export default function NavigationHeader() {
 
             <Menu className={styles.navigationMenu} theme="dark" mode="horizontal" items={navigationItems} />
 
-            {!auth && (
-                <Space>
-                    <Button
-                        variant="outlined"
-                        color="orange"
-                        icon={<LoginOutlined />}
-                        onClick={() => router.push('/login')}>
-                        Login
-                    </Button>
-                    <Button
-                        variant="solid"
-                        color="orange"
-                        icon={<EditFilled />}
-                        iconPosition="end"
-                        onClick={() => router.push('/register')}>
-                        Register
-                    </Button>
-                </Space>
-            )}
-        </Header>
+                <Menu
+                    className={styles.navigationMenu}
+                    theme="dark"
+                    mode="horizontal"
+                    items={navigationLinks}
+                    selectedKeys={[pathname]}
+                />
+                <Space>{navigationButtons}</Space>
+            </Header>
     );
 }
