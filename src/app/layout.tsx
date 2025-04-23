@@ -24,7 +24,15 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
     return (
         <html lang="en">
             <body>
-                <ConfigProvider theme={{ cssVar: true }}>
+                <ConfigProvider
+                    theme={{
+                        cssVar: true,
+                        components: {
+                            Layout: {
+                                headerBg: '#854c0b',
+                            },
+                        },
+                    }}>
                     <AuthProvider>
                         <App>
                             <Layout>

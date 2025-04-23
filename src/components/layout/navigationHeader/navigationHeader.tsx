@@ -67,12 +67,19 @@ export default function NavigationHeader() {
     }
 
     return (
-        <Header className={styles.header}>
-            <Link className={styles.logo} href="/">
-                <Image className={styles.logo} src={logoHorizontal} alt="logo" />
-            </Link>
-
-            <Menu className={styles.navigationMenu} theme="dark" mode="horizontal" items={navigationItems} />
+        <ConfigProvider
+            theme={{
+                components: {
+                    Menu: {
+                        darkItemBg: '#854c0b',
+                        darkItemSelectedBg: '#ff6f1f',
+                    },
+                },
+            }}>
+            <Header className={styles.header}>
+                <Link className={styles.logo} href="/">
+                    <Image className={styles.logo} src={logoHorizontal} alt="logo" />
+                </Link>
 
                 <Menu
                     className={styles.navigationMenu}
@@ -83,5 +90,6 @@ export default function NavigationHeader() {
                 />
                 <Space>{navigationButtons}</Space>
             </Header>
+        </ConfigProvider>
     );
 }
