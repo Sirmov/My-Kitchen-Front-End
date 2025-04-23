@@ -1,0 +1,68 @@
+.container {
+    flex-grow: 1;
+    background: var(--ant-color-bg-container);
+    padding: 24;
+    border-radius: var(--ant-border-radius-lg);
+    margin: 20px 80px;
+}
+
+.about {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    line-height: 1.8;
+
+    h1,
+    h2 {
+        margin-top: 2rem;
+        color: #333;
+    }
+
+    p {
+        margin: 1rem 0;
+        font-size: 1.1rem;
+        color: #555;
+    }
+
+    .logo {
+        display: block;
+        margin: auto;
+        max-width: 300px;
+        width: 90%;
+        height: auto;
+    }
+
+    .author {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-top: 1rem;
+    }
+
+    @media only screen and (max-width: 576px) {
+        .author {
+            flex-wrap: wrap-reverse;
+        }
+    }
+
+    .profilePic {
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #mailIcon:hover {
+        color: #e04d3b;
+    }
+
+    #instagramIcon:hover {
+        color: #bc3380;
+    }
+
+    #facebookIcon:hover {
+        color: #0862f6;
+    }
+
+    #linkedinIcon:hover {
+        color: #0e72a3;
+    }
+}
