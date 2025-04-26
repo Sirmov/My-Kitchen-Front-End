@@ -4,26 +4,36 @@ import styles from './navigationHeader.module.scss';
 
 import logoHorizontal from '@public/logo-horizontal.png';
 
-import { ReactNode } from 'react';
+import { ReactElement } from 'react';
 
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
-import { Button, ConfigProvider, Menu, MenuProps, Space } from 'antd';
-import { EditFilled, LoginOutlined, LogoutOutlined } from '@ant-design/icons';
+import { Button, ConfigProvider, Dropdown, Menu, MenuProps, Space } from 'antd';
+import { EditFilled, LoginOutlined, LogoutOutlined, MenuOutlined } from '@ant-design/icons';
 import { Header } from 'antd/es/layout/layout';
 import MenuItem from 'antd/es/menu/MenuItem';
 
 import { useAuthContext } from '@/contexts/authContext';
+import { useRouter } from 'next/navigation';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
+
+
 export default function NavigationHeader() {
+    const router = useRouter();
     const pathname = usePathname();
     const { auth, setAuth } = useAuthContext();
 
-    let navigationLinks: MenuItem[] = [
+    function handleLogout(e: React.MouseEvent) {
+        e.preventDefault();
+        setAuth(null);
+        router.push('/');
+    }
+
+    const navigationLinks: MenuItem[] = [
         {
             label: <Link href="/">Home</Link>,
             key: '/',
@@ -32,39 +42,73 @@ export default function NavigationHeader() {
             label: <Link href="/about">About</Link>,
             key: '/about',
         },
+        ...(auth
+            ? [
+                {
+                    label: <Link href="/recipes">Recipes</Link>,
+                    key: '/recipes',
+                },
+                {
+                    key: 'logout',
+                    icon: <LogoutOutlined />,
+                    label: <Link href=":" prefetch={false} onClick={handleLogout}>Logout</Link>,
+                },
+            ]
+            : [
+                {
+                    key: '/login',
+                    icon: <LoginOutlined />,
+                    label: (
+                        <Link className={styles.authenticationButton} href="/login" prefetch={false}>
+                            Login
+                        </Link>
+                    ),
+                },
+                {
+                    key: '/register',
+                    icon: <EditFilled />,
+                    label: (
+                        <Link className={styles.authenticationButton} href="/register" prefetch={false}>
+                            Register
+                        </Link>
+                    ),
+                },
+            ]),
     ];
 
-    let navigationButtons: ReactNode[];
-
-    if (auth) {
-        if (!navigationLinks.find((ni) => ni?.key === 'recipes')) {
-            navigationLinks.splice(1, 0, {
-                label: <Link href="/recipes">Recipes</Link>,
-                key: '/recipes',
-            });
-        }
-
-        navigationButtons = [
-            <Button key={1} variant="solid" color="orange" icon={<LogoutOutlined />} onClick={() => setAuth(null)}>
+    const navigationButtons: ReactElement[] = auth
+        ? [
+            <Button
+                key="/logout"
+                className={styles.authenticationButton}
+                variant="solid"
+                color="orange"
+                icon={<LogoutOutlined />}
+                onClick={() => setAuth(null)}>
                 Logout
             </Button>,
-        ];
-    } else {
-        navigationLinks = navigationLinks.filter((ni) => ni?.key !== 'recipes');
-
-        navigationButtons = [
-            <Link key={1} href="/login">
-                <Button key={1} variant="solid" color="orange" icon={<LoginOutlined />}>
+        ]
+        : [
+            <Link key={'/login'} href="/login">
+                <Button
+                    className={styles.authenticationButton}
+                    variant="solid"
+                    color="orange"
+                    icon={<LoginOutlined />}>
                     Login
                 </Button>
             </Link>,
-            <Link key={2} href="/register">
-                <Button variant="solid" color="orange" icon={<EditFilled />} iconPosition="end">
+            <Link key={'/register'} href="/register">
+                <Button
+                    className={styles.authenticationButton}
+                    variant="solid"
+                    color="orange"
+                    icon={<EditFilled />}
+                    iconPosition="end">
                     Register
                 </Button>
             </Link>,
         ];
-    }
 
     return (
         <ConfigProvider
@@ -73,6 +117,12 @@ export default function NavigationHeader() {
                     Menu: {
                         darkItemBg: '#854c0b',
                         darkItemSelectedBg: '#ff6f1f',
+                        darkPopupBg: '#854c0b',
+                        itemColor: '#ffffff',
+                        darkSubMenuItemBg: '#ff6f1f',
+                    },
+                    Dropdown: {
+                        colorBgElevated: '#854c0b', // background of dropdown
                     },
                 },
             }}>
@@ -88,7 +138,24 @@ export default function NavigationHeader() {
                     items={navigationLinks}
                     selectedKeys={[pathname]}
                 />
-                <Space>{navigationButtons}</Space>
+
+                <div className={styles.hamburgerDropdown}>
+                    <Dropdown
+                        trigger={['click']}
+                        menu={{
+                            className: styles.hamburgerMenu,
+                            theme: 'dark',
+                            mode: 'vertical',
+                            items: navigationLinks,
+                            selectedKeys: [pathname],
+                        }}
+                        overlayClassName={styles.dropdownOverlay}>
+                        <Button className={styles.hamburgerButton} type="text" icon={<MenuOutlined />} />
+                    </Dropdown>
+                </div>
+
+
+                <Space className={styles.navigationButtons}>{navigationButtons}</Space>
             </Header>
         </ConfigProvider>
     );

@@ -6,6 +6,10 @@ header.header {
 ul.navigationMenu {
     flex: 1;
     min-width: 0;
+
+    li:has(.authenticationButton) {
+        display: none;
+    }
 }
 
 .logo {
@@ -13,4 +17,71 @@ ul.navigationMenu {
     width: 150px;
     height: 50px;
     margin-right: 10px;
+}
+.hamburgerDropdown {
+    height: 60%;
+    padding: 2px 2px;
+    border: 1px solid black;
+    border-radius: 8px;
+    background-color: #eb9a38;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+div.dropdownOverlay ul:global(.ant-dropdown-menu) {
+    background-color: #854c0b;
+    padding-top: 8px;
+    min-width: 160px;
+    top: 15px;
+
+    li:global(.ant-dropdown-menu-item) {
+        color: rgba(255, 255, 255, 0.65);
+        background-color: #854c0b;
+        padding: 0 16px;
+        margin: 4px;
+        height: 40px;
+        line-height: 40px;
+        width: calc(100% - 8px);
+
+        span:global(.anticon) {
+            min-width: 14px;
+            font-size: 14px;
+        }
+    }
+
+    li:global(.ant-dropdown-menu-item):hover {
+        background-color: #854c0b;
+    }
+
+    li:global(.ant-dropdown-menu-item-selected) {
+        color: #fff;
+        background-color: #ff6f1f;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .header {
+        justify-content: space-between;
+    }
+
+    .navigationMenu {
+        display: none;
+    }
+
+    .navigationButtons {
+        display: none;
+    }
+
+    ul.navigationMenu li:has(.authenticationButton) {
+        display: inline-block;
+    }
+
+    .hamburgerDropdown {
+        display: flex;
+    }
+
+    div.dropdownOverlay ul:global(.ant-dropdown-menu) {
+        display: block;
+    }
 }

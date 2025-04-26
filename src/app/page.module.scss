@@ -64,7 +64,7 @@
 
     .stepCard {
         height: 100%;
-        background: #f7f7f7;
+        background: #eb9a38;
         padding: 2rem;
         border-radius: 1rem;
         box-shadow: var(--ant-box-shadow-secondary);
@@ -81,7 +81,6 @@
         .stepIcon {
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            color: #a55f09;
         }
 
         h3 {
@@ -91,7 +90,6 @@
 
         p {
             font-size: 1rem;
-            color: #555;
         }
     }
 }
