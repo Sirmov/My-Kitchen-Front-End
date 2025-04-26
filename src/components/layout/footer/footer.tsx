@@ -8,7 +8,7 @@ import Link from 'next/link';
 export default function Footer() {
     return (
         <AntDFooter className={styles.footer}>
-            <Flex justify="space-around" align="center">
+            <Flex className={styles.footerContainer} justify="space-around" align="center">
                 <ul>
                     <li>
                         <Link href="/">Home</Link>

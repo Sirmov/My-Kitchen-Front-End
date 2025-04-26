@@ -1,12 +1,23 @@
 .footer {
     text-align: center;
+
+    ul li {
+        list-style: none;
+
+        &:hover a {
+            color: inherit;
+            text-decoration: underline;
+        }
+    }
 }
 
-.footer ul li {
-    list-style: none;
+@media only screen and (max-width: 768px) {
+    .footer {
+        padding: 24px 50px;
+    }
 
-    &:hover a {
-        color: inherit;
-        text-decoration: underline;
+    .footerContainer {
+        flex-wrap: wrap;
+        gap: 15px;
     }
 }
