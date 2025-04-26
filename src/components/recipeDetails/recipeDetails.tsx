@@ -37,7 +37,7 @@ export default function RecipeDetails({ recipe }: { recipe: Recipe }) {
                 <Col span={24} lg={8} xl={10} xxl={12}>
                     <div className={styles.recipeIngredientsContainer}>
                         <h2>
-                            Нужни продукти
+                            Ingredients
                             <ShoppingCartOutlined id={styles.ingredientsIcon} />
                         </h2>
                         <ul className={styles.recipeIngredients}>
@@ -51,7 +51,7 @@ export default function RecipeDetails({ recipe }: { recipe: Recipe }) {
             <Divider />
             <h2 className={styles.recipeDirectionsHeading}>
                 <ReadOutlined id={styles.directionsIcon} />
-                Начин на приготвяне
+                Directions
             </h2>
             <ol className={styles.recipeDirections}>
                 {recipe?.directions.split('. ').map((direction, index) => (

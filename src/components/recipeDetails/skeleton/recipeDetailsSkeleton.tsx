@@ -32,7 +32,7 @@ export default function RecipeDetailsSkelton() {
                 <Col span={24} lg={8} xl={10} xxl={12}>
                     <div className={styles.recipeIngredientsContainer}>
                         <h2>
-                            Нужни продукти
+                            Ingredients
                             <ShoppingCartOutlined id={styles.ingredientsIcon} />
                         </h2>
                         <ul className={styles.recipeIngredients}>
@@ -48,7 +48,7 @@ export default function RecipeDetailsSkelton() {
             <Divider />
             <h2 className={styles.recipeDirectionsHeading}>
                 <ReadOutlined id={styles.directionsIcon} />
-                Начин на приготвяне
+                Directions
             </h2>
             <ol className={styles.recipeDirections}>
                 <Skeleton active title={false} paragraph={{ rows: 5, width: ['60%', '40%', '50%', '70%', '60%'] }} />
