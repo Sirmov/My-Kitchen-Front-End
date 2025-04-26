@@ -6,7 +6,8 @@
 }
 
 .container {
-    margin: 50px auto 0 auto;
+    flex: 1;
+    margin: 50px 20px;
     max-width: 400px;
     background: var(--ant-color-bg-container);
     min-height: 300px;
@@ -34,14 +35,28 @@
 form.loginForm {
     padding: 5px 20px;
     margin: 10px auto 0 auto;
+
+    button#submitButton {
+        margin-bottom: 7px;
+
+        background-color: #fa8c16;
+
+        &:hover {
+            background-color: #fc9b34;
+        }
+    }
+
+    a {
+        color: var(--ant-color-link);
+    }
+
+    a:hover {
+        color: var(--ant-color-link-hover);
+    }
 }
 
 @media only screen and (width >= 1200px) {
     form.loginForm {
         padding: 10px 50px;
     }
-}
-
-form.loginForm button {
-    margin-bottom: 7px;
 }

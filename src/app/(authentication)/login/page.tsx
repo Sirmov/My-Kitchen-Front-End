@@ -10,10 +10,6 @@ import FormItem from 'antd/es/form/FormItem';
 import Password from 'antd/es/input/Password';
 import Link from 'next/link';
 
-function onFinish(values: any) {
-    console.log(`Received values of form: ${values}`);
-}
-
 export default function LoginPage() {
     return (
         <Row style={{ height: '90vh' }}>
@@ -23,39 +19,40 @@ export default function LoginPage() {
                 xs={{ span: 0 }}
                 md={{ span: 12 }}></Col>
             <Col xs={{ span: 24 }} md={{ span: 12 }}>
-                <div className={styles.container}>
-                    <h1 className={styles.formTitle}>Login</h1>
+                <Flex justify='center' align='center'>
+                    <div className={styles.container}>
+                        <h1 className={styles.formTitle}>Login</h1>
 
-                    <Form
-                        className={styles.loginForm}
-                        name="loginForm"
-                        initialValues={{ remember: true }}
-                        onFinish={onFinish}>
-                        <FormItem name="username" rules={[{ required: true, message: 'Please input your Username!' }]}>
-                            <Input prefix={<UserOutlined />} placeholder="Username" />
-                        </FormItem>
+                        <Form
+                            className={styles.loginForm}
+                            name="loginForm"
+                            initialValues={{ remember: true }}>
+                            <FormItem name="username" rules={[{ required: true, message: 'Please input your Username!' }]}>
+                                <Input prefix={<UserOutlined />} placeholder="Username" />
+                            </FormItem>
 
-                        <FormItem name="password" rules={[{ required: true, message: 'Please input your Password!' }]}>
-                            <Password prefix={<LockOutlined />} placeholder="Password" />
-                        </FormItem>
+                            <FormItem name="password" rules={[{ required: true, message: 'Please input your Password!' }]}>
+                                <Password prefix={<LockOutlined />} placeholder="Password" />
+                            </FormItem>
 
-                        <FormItem>
-                            <Flex justify="space-between" align="center">
-                                <FormItem name="remember" valuePropName="checked" noStyle>
-                                    <Checkbox>Remember me</Checkbox>
-                                </FormItem>
-                                <Link href="/forgotPassword">Forgot password?</Link>
-                            </Flex>
-                        </FormItem>
+                            <FormItem>
+                                <Flex justify="space-between" align="center">
+                                    <FormItem name="remember" valuePropName="checked" noStyle>
+                                        <Checkbox>Remember me</Checkbox>
+                                    </FormItem>
+                                    <Link href="/forgotPassword">Forgot password?</Link>
+                                </Flex>
+                            </FormItem>
 
-                        <FormItem>
-                            <Button block size="large" type="primary" htmlType="submit">
-                                Log in
-                            </Button>
-                            Don&apos;t have an account? <Link href="/register">Register now!</Link>
-                        </FormItem>
-                    </Form>
-                </div>
+                            <FormItem>
+                                <Button id={styles.submitButton} block size="large" type="primary" htmlType="submit">
+                                    Log in
+                                </Button>
+                                Don&apos;t have an account? <Link href="/register">Register now!</Link>
+                            </FormItem>
+                        </Form>
+                    </div>
+                </Flex>
             </Col>
         </Row>
     );
