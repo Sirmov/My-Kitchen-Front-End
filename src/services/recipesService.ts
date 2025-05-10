@@ -1,11 +1,13 @@
-export type Recipe = {
+import { ProblemDetails } from './services.types';
+
+export interface Recipe {
     id: string;
     imageUrl: string;
     title: string;
     description: string;
     ingredients: string;
     directions: string;
-};
+}
 
 const recipes: Recipe[] = [
     {
@@ -59,22 +61,82 @@ const recipes: Recipe[] = [
     },
 ];
 
-export async function getAllRecipes(): Promise<Recipe[]> {
+export async function getAllRecipes(): Promise<Recipe[] | ProblemDetails> {
     return new Promise((resolve) => setTimeout(resolve, 1000, recipes));
 }
 
-export async function getRecipe(recipeId: string): Promise<Recipe> {
+export async function getRecipe(recipeId: string): Promise<Recipe | ProblemDetails> {
     const recipe = recipes.find((x) => x.id === recipeId);
 
     if (recipe) {
         return new Promise((resolve) => setTimeout(resolve, 1000, recipe));
     }
 
-    return new Promise((_, reject) => setTimeout(reject, 1000));
+    return new Promise((_, reject) =>
+        setTimeout(reject, 1000, {
+            status: 400,
+            type: 'https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.4',
+            title: 'Not Found',
+            details: `No recipe with id ${recipeId} was found.`,
+        })
+    );
 }
 
-export async function createRecipe() {}
+export async function createRecipe(
+    title: string,
+    description: string,
+    ingredients: string,
+    directions: string,
+    imageUrl: string
+): Promise<Recipe | ProblemDetails> {
+    const recipe = {
+        id: (++recipes.length).toString(),
+        title,
+        description,
+        ingredients,
+        directions,
+        imageUrl,
+    };
 
-export async function updateRecipe() {}
+    recipes.push(recipe);
 
-export async function deleteRecipe() {}
+    return new Promise((resolve) => setTimeout(resolve, 1000, recipe));
+}
+
+export async function updateRecipe(recipeId: string, recipe: Recipe): Promise<Recipe | ProblemDetails> {
+    const recipeIndex = recipes.findIndex((x) => x.id === recipeId);
+
+    if (recipeIndex === -1) {
+        return new Promise((_, reject) =>
+            setTimeout(reject, 1000, {
+                status: 400,
+                type: 'https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.4',
+                title: 'Not Found',
+                details: `No recipe with id ${recipeId} was found.`,
+            })
+        );
+    }
+
+    recipes[recipeIndex] = recipe;
+
+    return new Promise((resolve) => setTimeout(resolve, 1000, recipe));
+}
+
+export async function deleteRecipe(recipeId: string): Promise<boolean | ProblemDetails> {
+    const recipeIndex = recipes.findIndex((x) => x.id === recipeId);
+
+    if (recipeIndex === -1) {
+        return new Promise((_, reject) =>
+            setTimeout(reject, 1000, {
+                status: 400,
+                type: 'https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.4',
+                title: 'Not Found',
+                details: `No recipe with id ${recipeId} was found.`,
+            })
+        );
+    }
+
+    recipes.splice(recipeIndex, 1);
+
+    return new Promise((resolve) => setTimeout(resolve, 1000, true));
+}
