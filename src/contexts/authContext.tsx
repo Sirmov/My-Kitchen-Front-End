@@ -3,25 +3,18 @@
 import { ReactNode, createContext, useContext } from 'react';
 
 import useLocalStorage from '@hooks/useLocalStorage';
+import { User } from '@/services/authService';
 
 type AuthContextType = {
-    auth: Auth | null;
-    setAuth: React.Dispatch<React.SetStateAction<Auth | null>>;
+    auth: User | null;
+    setAuth: React.Dispatch<React.SetStateAction<User | null>>;
 };
 
-export type Auth = {
-    _id: string;
-    username: string;
-    email: string;
-    accessToken: string;
-    refreshToken: string;
-    roles: string[];
-};
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-    const [auth, setAuth] = useLocalStorage<Auth | null>('auth', null);
+    const [auth, setAuth] = useLocalStorage<User | null>('auth', null);
 
     return <AuthContext.Provider value={{ auth, setAuth }}>{children}</AuthContext.Provider>;
 }

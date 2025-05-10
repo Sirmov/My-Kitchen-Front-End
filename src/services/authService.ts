@@ -1,7 +1,15 @@
-import { Auth } from '@/contexts/authContext';
 
-export async function login(): Promise<Auth> {
-    return {
+export type User = {
+    _id: string;
+    username: string;
+    email: string;
+    accessToken: string;
+    refreshToken: string;
+    roles: string[];
+};
+
+const users: User[] = [
+    {
         _id: '1',
         username: 'Nikola',
         email: 'sirmov0213@gmail.com',
