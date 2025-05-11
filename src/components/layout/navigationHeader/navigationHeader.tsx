@@ -50,7 +50,7 @@ export default function NavigationHeader() {
                 },
                 {
                     key: 'logout',
-                    icon: <LogoutOutlined />,
+                    icon: <LogoutOutlined className={styles.authenticationButton} />,
                     label: <Link href=":" prefetch={false} onClick={handleLogout}>Logout</Link>,
                 },
             ]
