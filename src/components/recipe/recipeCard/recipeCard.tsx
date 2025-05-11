@@ -10,50 +10,50 @@ import { Card, Popconfirm } from 'antd';
 import Meta from 'antd/es/card/Meta';
 import { CloseCircleFilled, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
-import { Recipe } from '@/services/recipesService';
+import { deleteRecipe, Recipe } from '@/services/recipesService';
 
 import ImageWithFallback from '@/utils/imageWithFallback/imageWithFallback';
+import RecipeEditModal from '../recipeEditModal/recipeEditModal';
+import { useRecipesContext } from '@/contexts/recipesContext';
 
 export type RecipeCardProps = {
     recipe: Recipe;
 };
 
 export default function RecipeCard({ recipe }: RecipeCardProps) {
-    const [open, setOpen] = useState(false);
-    const [confirmLoading, setConfirmLoading] = useState(false);
+    const [popconfirmIsOpen, setPopconfirmIsOpen] = useState(false);
+    const [editModalIsOpen, setEditModalIsOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-    const showPopconfirm = () => {
-        setOpen(true);
-    };
+    const { setRecipes } = useRecipesContext();
 
-    const handleOk = () => {
-        setConfirmLoading(true);
+    async function handleDelete() {
+        setLoading(true);
 
-        setTimeout(() => {
-            setOpen(false);
-            setConfirmLoading(false);
-        }, 2000);
-    };
+        const result = await deleteRecipe(recipe.id);
 
-    const handleCancel = () => {
-        console.log('Clicked cancel button');
-        setOpen(false);
-    };
+        if (result === true) {
+            setRecipes((recipes) => (recipes ? recipes.filter((r) => r.id !== recipe.id) : recipes));
+        }
+
+        setPopconfirmIsOpen(false);
+        setLoading(false);
+    }
 
     const actions: ReactNode[] = [
-        <EditOutlined key="edit" className={styles.editIcon} />,
+        <EditOutlined key="edit" className={styles.editIcon} onClick={() => setEditModalIsOpen(true)} />,
         <Popconfirm
             key="delete"
-            open={open}
+            open={popconfirmIsOpen}
             icon={<CloseCircleFilled className={styles.confirmDeleteIcon} />}
             title="Confirm Action"
             description="Are you sure you want to delete this recipe?"
             okText="Delete"
-            okButtonProps={{ loading: confirmLoading, variant: 'solid', color: 'red' }}
-            onConfirm={handleOk}
+            okButtonProps={{ loading: loading, variant: 'solid', color: 'red' }}
+            onConfirm={handleDelete}
             cancelButtonProps={{ variant: 'outlined', color: 'red' }}
-            onCancel={handleCancel}>
-            <DeleteOutlined className={styles.deleteIcon} onClick={showPopconfirm} />
+            onCancel={() => setPopconfirmIsOpen(false)}>
+            <DeleteOutlined className={styles.deleteIcon} onClick={() => setPopconfirmIsOpen(true)} />
         </Popconfirm>,
     ];
 
@@ -77,6 +77,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
             <Link href={`/recipes/${recipe.id}`}>
                 <Meta title={recipe.title} description={recipe.description} />
             </Link>
+            <RecipeEditModal recipe={recipe} isOpen={editModalIsOpen} onClose={() => setEditModalIsOpen(false)} />
         </Card>
     );
 }
