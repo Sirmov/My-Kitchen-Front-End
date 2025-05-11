@@ -1,0 +1,15 @@
+.emptyRecipes {
+    margin-top: 40px;
+}
+
+.emptyImage {
+    width: 100%;
+}
+
+.emptyRecipes :global(.ant-empty-image) {
+    height: 200px;
+}
+
+.emptyRecipes :global(.ant-empty-description) {
+    font-size: large;
+}
