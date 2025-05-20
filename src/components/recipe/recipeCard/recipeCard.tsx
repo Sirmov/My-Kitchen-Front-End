@@ -1,20 +1,22 @@
 'use client';
 
-import styles from './recipeCard.module.scss';
-
 import { ReactNode, useState } from 'react';
 
 import Link from 'next/link';
 
+import { CloseCircleFilled, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Card, Popconfirm } from 'antd';
 import Meta from 'antd/es/card/Meta';
-import { CloseCircleFilled, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
-import { deleteRecipe, Recipe } from '@/services/recipesService';
+import { useRecipesContext } from '@contexts/recipesContext';
 
-import ImageWithFallback from '@/utils/imageWithFallback/imageWithFallback';
-import RecipeEditModal from '../recipeEditModal/recipeEditModal';
-import { useRecipesContext } from '@/contexts/recipesContext';
+import { Recipe, deleteRecipe, updateRecipe } from '@services/recipesService';
+
+import RecipeEditModal, { RecipeEditFormValues } from '@components/recipe/recipeEditModal/recipeEditModal';
+
+import ImageWithFallback from '@utils/imageWithFallback/imageWithFallback';
+
+import styles from './recipeCard.module.scss';
 
 export type RecipeCardProps = {
     recipe: Recipe;
@@ -26,6 +28,19 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
     const [loading, setLoading] = useState(false);
 
     const { setRecipes } = useRecipesContext();
+
+    async function handleEdit(values: RecipeEditFormValues) {
+        setLoading(true);
+
+        const updatedRecipe = (await updateRecipe(recipe.id, values)) as Recipe;
+
+        setRecipes((recipes) =>
+            recipes ? recipes.map((r) => (r.id === updatedRecipe.id ? updatedRecipe : r)) : recipes
+        );
+
+        setLoading(false);
+        setEditModalIsOpen(false);
+    }
 
     async function handleDelete() {
         setLoading(true);
@@ -77,7 +92,13 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
             <Link href={`/recipes/${recipe.id}`}>
                 <Meta title={recipe.title} description={recipe.description} />
             </Link>
-            <RecipeEditModal recipe={recipe} isOpen={editModalIsOpen} onClose={() => setEditModalIsOpen(false)} />
+            <RecipeEditModal
+                recipe={recipe}
+                open={editModalIsOpen}
+                loading={loading}
+                onSubmit={handleEdit}
+                onClose={() => setEditModalIsOpen(false)}
+            />
         </Card>
     );
 }
