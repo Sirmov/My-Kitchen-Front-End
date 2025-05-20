@@ -1,4 +1,4 @@
-import { ProblemDetails } from './services.types';
+import { ProblemDetails } from '@services/services.types';
 
 export type User = {
     _id: string;
@@ -20,19 +20,34 @@ const users: User[] = [
     },
 ];
 
-export async function login(email: string, password: string): Promise<User | ProblemDetails> {
+export async function loginWithEmail(email: string, password: string): Promise<User | ProblemDetails> {
     const user = users.find((u) => u.email == email);
 
-    return user
-        ? new Promise((resolve) => setTimeout(resolve, 1000, user))
-        : new Promise((_, reject) =>
-            setTimeout(reject, 1000, {
-                status: 400,
-                type: 'https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1',
-                title: 'Bad request',
-                details: `Email or password not correct.`,
-            })
-        );
+    return user ?
+            new Promise((resolve) => setTimeout(resolve, 1000, user))
+        :   new Promise((_, reject) =>
+                setTimeout(reject, 1000, {
+                    status: 400,
+                    type: 'https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1',
+                    title: 'Bad request',
+                    details: `Email or password not correct.`,
+                })
+            );
+}
+
+export async function loginWithUsername(username: string, password: string): Promise<User | ProblemDetails> {
+    const user = users.find((u) => u?.username === username);
+
+    return user ?
+            new Promise((resolve) => setTimeout(resolve, 1000, user))
+        :   new Promise((_, reject) =>
+                setTimeout(reject, 1000, {
+                    status: 400,
+                    type: 'https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1',
+                    title: 'Bad request',
+                    details: `Username or password not correct.`,
+                })
+            );
 }
 
 export async function register(username: string, email: string, password: string): Promise<User | ProblemDetails> {
