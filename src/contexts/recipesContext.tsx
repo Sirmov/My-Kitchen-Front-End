@@ -1,7 +1,8 @@
 'use client';
 
-import { Recipe } from '@/services/recipesService';
 import { ReactNode, createContext, useContext, useState } from 'react';
+
+import { Recipe } from '@services/recipesService';
 
 type RecipesContextType = {
     recipes: Recipe[] | null;

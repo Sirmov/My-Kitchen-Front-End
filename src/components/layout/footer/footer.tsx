@@ -1,9 +1,9 @@
-import styles from './footer.module.scss';
+import Link from 'next/link';
 
 import { Flex } from 'antd';
-
 import { Footer as AntDFooter } from 'antd/es/layout/layout';
-import Link from 'next/link';
+
+import styles from './footer.module.scss';
 
 export default function Footer() {
     return (

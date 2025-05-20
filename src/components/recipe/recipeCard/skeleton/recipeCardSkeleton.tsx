@@ -1,10 +1,10 @@
-import styles from './recipeCardSkeleton.module.scss';
-
 import { ReactNode } from 'react';
 
-import { Card } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { Card } from 'antd';
 import SkeletonNode from 'antd/es/skeleton/Node';
+
+import styles from './recipeCardSkeleton.module.scss';
 
 const actions: ReactNode[] = [
     <EditOutlined key="edit" className={styles.editIcon} />,

@@ -2,14 +2,14 @@
 
 import { ReactNode, createContext, useContext } from 'react';
 
+import { User } from '@services/authService';
+
 import useLocalStorage from '@hooks/useLocalStorage';
-import { User } from '@/services/authService';
 
 type AuthContextType = {
     auth: User | null;
     setAuth: React.Dispatch<React.SetStateAction<User | null>>;
 };
-
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 

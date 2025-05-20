@@ -1,11 +1,13 @@
-import profilePic from '@public/profile.jpg';
+import Link from 'next/link';
+
+import { FacebookFilled, InstagramFilled, LinkedinFilled, MailFilled } from '@ant-design/icons';
+
 import logo from '@public/logo.png';
+import profilePic from '@public/profile.jpg';
+
+import ImageWithFallback from '@utils/imageWithFallback/imageWithFallback';
 
 import styles from './page.module.scss';
-
-import ImageWithFallback from '@/utils/imageWithFallback/imageWithFallback';
-import { FacebookFilled, InstagramFilled, LinkedinFilled, MailFilled } from '@ant-design/icons';
-import Link from 'next/link';
 
 export default function AboutPage() {
     return (
