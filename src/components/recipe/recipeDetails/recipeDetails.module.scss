@@ -113,3 +113,7 @@
         font-size: inherit;
     }
 }
+
+div:global(.ant-popover) span:global(.ant-popconfirm-message-icon) .confirmDeleteIcon:global(.anticon) {
+    color: red;
+}

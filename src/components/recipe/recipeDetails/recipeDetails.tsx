@@ -1,14 +1,57 @@
-import styles from './recipeDetails.module.scss';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
-import { Button, Col, Divider, Flex, Row } from 'antd';
-import { ShoppingCartOutlined, ReadOutlined, DeleteOutlined, EditOutlined, BookOutlined } from '@ant-design/icons';
+import {
+    BookOutlined,
+    CloseCircleFilled,
+    DeleteOutlined,
+    EditOutlined,
+    ReadOutlined,
+    ShoppingCartOutlined,
+} from '@ant-design/icons';
+import { Button, Col, Divider, Flex, Popconfirm, Row } from 'antd';
 
-import { Recipe } from '@/services/recipesService';
-import ImageWithFallback from '@/utils/imageWithFallback/imageWithFallback';
+import { Recipe, deleteRecipe, updateRecipe } from '@services/recipesService';
 
-export default function RecipeDetails({ recipe }: { recipe: Recipe }) {
+import RecipeEditModal, { RecipeEditFormValues } from '@components/recipe/recipeEditModal/recipeEditModal';
+
+import ImageWithFallback from '@utils/imageWithFallback/imageWithFallback';
+
+import styles from './recipeDetails.module.scss';
+
+interface RecipeDetailsProps {
+    recipe: Recipe;
+    setRecipe: Dispatch<SetStateAction<Recipe | undefined>>;
+}
+
+export default function RecipeDetails({ recipe, setRecipe }: RecipeDetailsProps) {
+    const router = useRouter();
+    const [popconfirmIsOpen, setPopconfirmIsOpen] = useState(false);
+    const [editModalIsOpen, setEditModalIsOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    async function handleEdit(values: RecipeEditFormValues) {
+        setLoading(true);
+
+        const updatedRecipe = (await updateRecipe(recipe.id, values)) as Recipe;
+        setRecipe(updatedRecipe);
+
+        setLoading(false);
+        setEditModalIsOpen(false);
+    }
+
+    async function handleDelete() {
+        setLoading(true);
+
+        await deleteRecipe(recipe.id);
+
+        router.push('/recipes');
+        setPopconfirmIsOpen(false);
+        setLoading(false);
+    }
+
     return (
         <>
             <Row
@@ -41,9 +84,9 @@ export default function RecipeDetails({ recipe }: { recipe: Recipe }) {
                             <ShoppingCartOutlined id={styles.ingredientsIcon} />
                         </h2>
                         <ul className={styles.recipeIngredients}>
-                            {recipe?.ingredients.split(', ').map((ingredient, index) => (
-                                <li key={index}>{ingredient}</li>
-                            ))}
+                            {recipe?.ingredients
+                                .split(', ')
+                                .map((ingredient, index) => <li key={index}>{ingredient}</li>)}
                         </ul>
                     </div>
                 </Col>
@@ -54,16 +97,39 @@ export default function RecipeDetails({ recipe }: { recipe: Recipe }) {
                 Directions
             </h2>
             <ol className={styles.recipeDirections}>
-                {recipe?.directions.split('. ').map((direction, index) => (
-                    <li key={index}>{direction}</li>
-                ))}
+                {recipe?.directions
+                    .split('. ')
+                    .filter((d) => d != '')
+                    .map((direction, index) => <li key={index}>{direction}.</li>)}
             </ol>
             <Divider />
             <Flex className={styles.actions} justify="space-around" align="center" gap={10} wrap>
-                <Button size="large" icon={<DeleteOutlined />} color="danger" variant="solid">
-                    Delete
-                </Button>
-                <Button size="large" icon={<EditOutlined />} color="gold" variant="solid">
+                <Popconfirm
+                    key="delete"
+                    open={popconfirmIsOpen}
+                    icon={<CloseCircleFilled className={styles.confirmDeleteIcon} />}
+                    title="Confirm Action"
+                    description="Are you sure you want to delete this recipe?"
+                    okText="Delete"
+                    okButtonProps={{ loading: loading, variant: 'solid', color: 'red' }}
+                    onConfirm={handleDelete}
+                    cancelButtonProps={{ variant: 'outlined', color: 'red' }}
+                    onCancel={() => setPopconfirmIsOpen(false)}>
+                    <Button
+                        size="large"
+                        icon={<DeleteOutlined />}
+                        color="danger"
+                        variant="solid"
+                        onClick={() => setPopconfirmIsOpen(true)}>
+                        Delete
+                    </Button>
+                </Popconfirm>
+                <Button
+                    size="large"
+                    icon={<EditOutlined />}
+                    color="gold"
+                    variant="solid"
+                    onClick={() => setEditModalIsOpen(true)}>
                     Edit
                 </Button>
                 <Link href="/recipes">
@@ -72,6 +138,13 @@ export default function RecipeDetails({ recipe }: { recipe: Recipe }) {
                     </Button>
                 </Link>
             </Flex>
+            <RecipeEditModal
+                recipe={recipe}
+                open={editModalIsOpen}
+                loading={loading}
+                onSubmit={handleEdit}
+                onClose={() => setEditModalIsOpen(false)}
+            />
         </>
     );
 }
